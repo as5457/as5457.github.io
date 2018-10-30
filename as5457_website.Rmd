@@ -12,3 +12,11 @@ title: "Holy cow!"
 ### I have a webpage!
 
 And I can put all kinds of stuff on it!
+
+```{r}
+library(tidyverse)
+library(viridis)
+library(p8105.datasets)
+library(plot_ly)
+```
+
