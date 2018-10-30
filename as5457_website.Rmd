@@ -17,6 +17,5 @@ And I can put all kinds of stuff on it!
 library(tidyverse)
 library(viridis)
 library(p8105.datasets)
-library(plot_ly)
 ```
 
