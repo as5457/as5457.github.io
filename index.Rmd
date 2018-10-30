@@ -1,16 +1,14 @@
 ---
-title: "Holy cow!"
+title: "Arfan Siddique"
 ---
 
-### I have a webpage!
 
-And I can put all kinds of stuff on it!
 
 I like [google](https://www.google.com).
 
 I can link directly to my [about page](about.html).
 
-<img src="images/run.png" style="width:75%">
+<img src="images/prof.jpg" style="width:75%">
 
 I can add code
 
