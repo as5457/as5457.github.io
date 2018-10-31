@@ -87,3 +87,31 @@ eth = rest_inspec %>%
 eth = ggplotly(eth)
 eth
 ```
+
+Cleaning the dataset to capture years
+```{r}
+rest_clean = rest_inspec %>% 
+  separate(grade_date, into = c("year", "month", "date"), sep = "-") %>%
+  separate(date, into = c("date", "remove"), sep = 2) %>%
+  select (boro, cuisine_description, grade, year, month, date, camis) %>%   mutate(year = as.numeric(year))
+```
+
+Let's find out what the how many restaurants got A's in each borough by year
+```{r}
+rest = rest_clean %>% 
+  filter (year > 2013) %>% 
+  filter (grade == "A") %>%
+  group_by (boro, year) %>% 
+  summarize (count = n()) %>% 
+  ggplot (aes(x = year, y = count, color = boro)) +
+    geom_line () + geom_point() +
+  labs (
+    title = "Frequency of Total Number of A Grades Assigned",
+        x = "Year",
+        y = "Frequency"
+  )
+rest = ggplotly(rest)
+rest
+```
+
+What is the summary
