@@ -1,10 +1,13 @@
 ---
-title: "Plotly"
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
 ---
 
-Plotly plots
-
-```{r}
+```{r setup, include=FALSE}
+library(flexdashboard)
 library(tidyverse)
 library(viridis)
 ## Loading required package: viridisLite
@@ -70,7 +73,11 @@ rest_inspec =
 ```
 
 
-What is the frequency of select ethnic restaurants in each borough?
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
 ```{r}
 eth = rest_inspec %>% 
   filter (cuisine_description %in% c("Chinese", "French", "Japanese", "Indian", "Italian")) %>% 
@@ -88,16 +95,16 @@ eth = ggplotly(eth)
 eth
 ```
 
-Cleaning the dataset to capture years
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
 ```{r}
 rest_clean = rest_inspec %>% 
   separate(grade_date, into = c("year", "month", "date"), sep = "-") %>%
   separate(date, into = c("date", "remove"), sep = 2) %>%
   select (boro, cuisine_description, grade, year, month, date, camis, score) %>%   mutate(year = as.numeric(year))
-```
-
-Let's find out what the how many restaurants got A's in each borough by year
-```{r}
 rest = rest_clean %>% 
   filter (year > 2013) %>% 
   filter (grade == "A") %>%
@@ -114,7 +121,8 @@ rest = ggplotly(rest)
 rest
 ```
 
-What is the summary statistics of scores by year?
+### Chart C
+
 ```{r}
 rest_score = rest_clean %>% 
   select(boro, grade, year, camis, score) %>% 
@@ -135,3 +143,5 @@ rest_score = rest_clean %>%
 rest_score = ggplotly(rest_score)
 rest_score
 ```
+
+

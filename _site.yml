@@ -3,6 +3,8 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
+    - text: "Homework 4"
+      href: dashboard_template.html
     - text: "About Me"
       href: about.html
     - icon: fa-envelope fa-lg
