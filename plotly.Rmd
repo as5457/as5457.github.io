@@ -12,11 +12,78 @@ library(p8105.datasets)
 library(plotly)
 ```
 
+```{r importing_rest_insp}
+library(tidyverse)
+library(httr)
+library(jsonlite)
+
+get_all_inspections = function(url) {
+  
+  all_inspections = vector("list", length = 0)
+  
+  loop_index = 1
+  chunk_size = 50000
+  DO_NEXT = TRUE
+  
+  while (DO_NEXT) {
+    message("Getting data, page ", loop_index)
+    
+    all_inspections[[loop_index]] = 
+      GET(url,
+          query = list(`$order` = "zipcode",
+                       `$limit` = chunk_size,
+                       `$offset` = as.integer((loop_index - 1) * chunk_size)
+                       )
+          ) %>%
+      content("text") %>%
+      fromJSON() %>%
+      as_tibble()
+    
+    DO_NEXT = dim(all_inspections[[loop_index]])[1] == chunk_size
+    loop_index = loop_index + 1
+  }
+  
+  all_inspections
+  
+}
+
+url = "https://data.cityofnewyork.us/resource/9w7m-hzhe.json"
+
+nyc_inspections = get_all_inspections(url) %>%
+  bind_rows() 
+```
 
 
 
+```{r}
+nyc_inspections %>% 
+  group_by(boro, grade) %>% 
+  summarize(n = n()) %>% 
+  spread(key = grade, value = n)
+```
+
+```{r}
+rest_inspec =
+  nyc_inspections %>%
+  filter(grade %in% c("A", "B", "C"), boro != "Missing") %>% 
+  mutate(boro = str_to_title(boro))
+```
 
 
+What is the frequency of select ethnic restaurants in each borough?
+```{r}
+eth = rest_inspec %>% 
+  filter (cuisine_description %in% c("Chinese", "French", "Japanese", "Indian", "Italian")) %>% 
+  group_by (boro, cuisine_description) %>% 
+  summarize (n = n()) %>% 
+  ggplot(aes(x = cuisine_description, y=n, fill = boro)) +
+  geom_bar(stat="identity") + facet_wrap(~ boro, ncol=2) +
+  labs (
+    title = "Frequency of Select Ethnic Restaurants By Borough",
+        x = "Cuisine Type",
+        y = "Frequency"
+  ) + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + theme(legend.position="none")
 
-
-
+eth = ggplotly(eth)
+eth
+```
