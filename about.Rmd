@@ -1,5 +1,51 @@
 ---
-title: "About"
+title: "Resume"
 ---
 
-Resume goes here
+**Summary of Qualifications**
+----------------------------------------------------------------------
+Advanced Epidemiology graduate student with experience in domestic/international health research and administration. Proven success coordinating genomic and epidemiological studies, analyzing quantitative data and planning, implementing and evaluating health interventions. Specific skills include proficiency in GIS, SQL, SAS and R programming languages.
+ 
+ 
+ 
+**Education**
+----------------------------------------------------------------------
+*Columbia University Mailman School of Public Health | 2019*
+
+Master of Public Health (MPH), Department of Epidemiology with Certificate in Advanced Epidemiology
+ 
+*Princeton University | 2017*								         
+Bachelor of Arts (BA), Department of Molecular Biology with Certificate in Global Health and Health Policy
+
+
+
+ 
+**Professional Experience**
+---------------------------------------------------------------------
+*NYC Department of Health and Mental Hygiene, Sloan Foodborne Intern*
+
+* Conduct epidemiological analysis of daily foodborne illness outbreaks in New York City through data collection and text mining from various social media sites such as yelp, twitter and iwaspoisoned.com. 
+* Interview patients and investigate all foodborne disease complaints reported to the citywide complaint system (311).
+* Analyze seasonal patterns of complaint frequency and confirmed outbreaks to improve surveillance.
+* Assist Bureau of Communicable Diseases through sample collection and environmental evaluation of implicated items.
+
+*Mailman School of Public Health, Teaching Assistant*
+
+* Manage a year-long seminar course, Integration of Science and Practice, comprised of 24 first year Master’s students studying the design and implementation of public health interventions.
+* Assist faculty member with content preparation, grading, managing course website and hosting weekly tutorials.
+
+
+*Herbert Irving Comprehensive Cancer Center, Research Assistant*
+
+* Analyze medical records of >2,000 patients with tumor diagnoses under the research team of Dr. Manuela Orjuela.
+* Produce reports and deliverables looking at disease comorbidities and the likelihood of enrolling in a clinical study. 
+* Understand neighborhood level differences in cancer rates through geocoding and visualization of tumor registry data.
+
+
+*Murphy Lab at Princeton University, Research Assistant*
+
+* Analyzed lifespan and survival data using Kaplan-Meier estimates and multiple linear regression statistics. 
+* Performed quantification and visualization of germline mitochondria phenotypes using NIS elements software.
+* Conducted epigenetic data analysis (e.g. identifying biomarkers) using PRISM and SnapGene. 
+* Designed experiments and trained students in cloning, GFP expression, DAPI staining and gene bombardment.
+* Assisted senior scientists in the research team of Dr. Colleen Murphy in reviewing manuscripts and writing grants.
