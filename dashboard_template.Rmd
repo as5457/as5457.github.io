@@ -54,18 +54,12 @@ url = "https://data.cityofnewyork.us/resource/9w7m-hzhe.json"
 
 nyc_inspections = get_all_inspections(url) %>%
   bind_rows() 
-```
 
-
-
-```{r}
 nyc_inspections %>% 
   group_by(boro, grade) %>% 
   summarize(n = n()) %>% 
   spread(key = grade, value = n)
-```
 
-```{r}
 rest_inspec =
   nyc_inspections %>%
   filter(grade %in% c("A", "B", "C"), boro != "Missing") %>% 
