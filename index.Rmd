@@ -3,11 +3,6 @@ title: "Arfan Siddique"
 ---
 Arfan's research interests include cancer epidemiology, gene-environment interactions and the molecular basis of age-related decline. Arfan has experience designing and implementing research projects, conducting statistical data analysis and working in resource-poor settings. Aside from his emphasis in academic research, he enjoys promoting the arts and loves teaching, backpacking and dance choreography.
 
-
-I like [google](https://www.google.com).
-
-I can link directly to my [about page](about.html).
-
 <img src="images/prof.jpg" style="width:75%">
 
 

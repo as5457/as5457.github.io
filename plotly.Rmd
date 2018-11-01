@@ -1,22 +1,21 @@
 ---
-title: "Plotly"
+title: "Homework 4 - Interactivity"
 ---
 
-Plotly plots
+I currently work at the NYC DOHMH conducting outbreak investigations of foodborne illnesses. Our office conducts routine restaurant investigations as well as environmental assessments, implicated food sampling etc. Therefore, for this homework I am trying to understand restaurant grades assigned by the NYC DOHMH. For plot 1 below, I am trying to visualize what the frequency of ethnic restaurant inspections look like across the 5 boroughs. Raw seafood related complaints are quite commonly received by our office. Therefore, it is interesting that out of the common ethnic restaurants shown below, Chinese restaurants had the highest frequency of inspections. 
 
-```{r}
+```{r, message = FALSE}
+#Loading the required packages. 
 library(tidyverse)
 library(viridis)
-## Loading required package: viridisLite
 library(p8105.datasets)
 library(plotly)
 ```
 
-```{r importing_rest_insp}
-library(tidyverse)
+```{r importing_rest_insp, message = FALSE}
+#Importing the restaurant inspection dataset.
 library(httr)
 library(jsonlite)
-
 get_all_inspections = function(url) {
   
   all_inspections = vector("list", length = 0)
@@ -55,7 +54,8 @@ nyc_inspections = get_all_inspections(url) %>%
 
 
 
-```{r}
+```{r, message = FALSE}
+#Spreading the dataset and creating sepate columns for grades
 nyc_inspections %>% 
   group_by(boro, grade) %>% 
   summarize(n = n()) %>% 
@@ -63,6 +63,7 @@ nyc_inspections %>%
 ```
 
 ```{r}
+#Filtering out inspections that resulted only in As, Bs and Cs. 
 rest_inspec =
   nyc_inspections %>%
   filter(grade %in% c("A", "B", "C"), boro != "Missing") %>% 
@@ -70,12 +71,21 @@ rest_inspec =
 ```
 
 
-What is the frequency of select ethnic restaurants in each borough?
+What is the frequency of inspections done at ethnic restaurants in each borough?
 ```{r}
+#Defining a new object called eth
 eth = rest_inspec %>% 
+  
+#Filtering out only Chinese, French, Japanese, Indian and Italian restaurents.
   filter (cuisine_description %in% c("Chinese", "French", "Japanese", "Indian", "Italian")) %>% 
+  
+#Grouping by the borough and cuisine_description
   group_by (boro, cuisine_description) %>% 
+  
+#Counting frequencies
   summarize (n = n()) %>% 
+  
+#Creating bar graph by borough. 
   ggplot(aes(x = cuisine_description, y=n, fill = boro)) +
   geom_bar(stat="identity") + facet_wrap(~ boro, ncol=2) +
   labs (
@@ -84,25 +94,44 @@ eth = rest_inspec %>%
         y = "Frequency"
   ) + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + theme(legend.position="none")
 
+#Converting ggplot object to interactive plotly plot. 
 eth = ggplotly(eth)
 eth
 ```
 
-Cleaning the dataset to capture years
+Over the past few years, the restaurant inspection procedure has undergone various changes. For example in 2015, the DOHMH implemented a new grading system going from numeric values to letter grades. Additionally, more and more inspectors have been hired to be able to regularly inspect all restaurants, in addition to outbreak-related inspections. This is why in the following plot, I am exploring how the freuqency of inspections have changed with time. It seems that generally the frequency of inspections have been increasingly over time (which is expected) but it's interesting how between 2016 and 2017, the frequencies remained similar across most of the boroughs. 
+
 ```{r}
+#Cleaning the dataset to extract the year variable of the inspection date. 
 rest_clean = rest_inspec %>% 
+  
+#Separating the grade_date variable into year, month and date. 
   separate(grade_date, into = c("year", "month", "date"), sep = "-") %>%
   separate(date, into = c("date", "remove"), sep = 2) %>%
-  select (boro, cuisine_description, grade, year, month, date, camis, score) %>%   mutate(year = as.numeric(year))
+  select (boro, cuisine_description, grade, year, month, date, camis, score) %>%  
+
+#Converting the year variable from character to numeric to be able to plot it as a continuous variable. 
+  mutate(year = as.numeric(year))
 ```
 
-Let's find out what the how many restaurants got A's in each borough by year
+
 ```{r}
+#Generating line graph to see how the frequency of restaurant inspections resulting in an A grade has changed over the past few years. 
 rest = rest_clean %>% 
+  
+#Filtering out 2013 because of missing data
   filter (year > 2013) %>% 
+  
+#Filtering inspections that resulted in As. 
   filter (grade == "A") %>%
+  
+#Grouping by borough and year
   group_by (boro, year) %>% 
+  
+#Counting frequency of inspections resulting in As. 
   summarize (count = n()) %>% 
+  
+#Generating line graph
   ggplot (aes(x = year, y = count, color = boro)) +
     geom_line () + geom_point() +
   labs (
@@ -110,18 +139,32 @@ rest = rest_clean %>%
         x = "Year",
         y = "Frequency"
   )
+
+#Converting ggplot to an interactive plotly graph. 
 rest = ggplotly(rest)
 rest
 ```
 
-What is the summary statistics of scores by year?
+This final plot shows us the summary statistics of the violation points received by restaurants. It shows us that most restaurants have a low score (lower scores correspond to better sanitary practices). However, the plot also shows that the data are right skewed with some restaurants receive very high violation points. 
+
 ```{r}
+#Generating boxplot called rest_score
 rest_score = rest_clean %>% 
+  
+#Selecting relevant variables
   select(boro, grade, year, camis, score) %>% 
+  
+#Convering the score from character to numeric. 
   mutate(score = as.numeric(score)) %>% 
+  
+#Filtering to keep years 2015-2017 because these are the years where full data are available. 
   filter (year > 2014) %>% 
   filter (year < 2018) %>% 
+  
+#Converting year back to a character variable. 
   mutate(year = as.character(year)) %>% 
+  
+#Generating ggplot. 
   ggplot(aes(x = year, y = score, fill = year)) +
   geom_boxplot() +
   theme_classic() + 
@@ -132,6 +175,7 @@ rest_score = rest_clean %>%
         y = "Score"
   )
 
+#Converting ggplot to an interactive plotly plot. 
 rest_score = ggplotly(rest_score)
 rest_score
 ```
