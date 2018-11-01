@@ -89,7 +89,7 @@ eth = rest_inspec %>%
   ggplot(aes(x = cuisine_description, y=n, fill = boro)) +
   geom_bar(stat="identity") + facet_wrap(~ boro, ncol=2) +
   labs (
-    title = "Frequency of Select Ethnic Restaurants By Borough",
+    title = "Frequency of Inspections at Ethnic Restaurants",
         x = "Cuisine Type",
         y = "Frequency"
   ) + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + theme(legend.position="none")
@@ -135,7 +135,7 @@ rest = rest_clean %>%
   ggplot (aes(x = year, y = count, color = boro)) +
     geom_line () + geom_point() +
   labs (
-    title = "Frequency of Total Number of A Grades Assigned",
+    title = "Frequency of A Grades Assigned",
         x = "Year",
         y = "Frequency"
   )
