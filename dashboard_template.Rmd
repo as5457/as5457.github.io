@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "NYC Restaurant Inspections"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -15,7 +15,7 @@ library(p8105.datasets)
 library(plotly)
 ```
 
-```{r importing_rest_insp}
+```{r base_code, include=FALSE}
 library(tidyverse)
 library(httr)
 library(jsonlite)
